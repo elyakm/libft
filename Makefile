@@ -1,55 +1,44 @@
-NAME		= libft.a
+NAME = libft.a
 
-CC			= gcc
-CFLAGS		= -Wall -Wextra -Werror -I includes
-RM			= rm -f
-AR			= ar rcs
-HEADER = $(addsuffix .h, $(addprefix includes/, ))
+CC = gcc
 
-SRCS_PATH = src/
+CFLAGS = -Wall -Wextra -Werror
 
-FTIS = alnum alpha ascii digit print 
-FTLST = add_back add_front last new size delone clear iter map 
-FTMEM = bzero  memchr memcmp memcpy memmove memset calloc
-FTPUT = char_fd str_fd endl_fd nbr_fd 
-FTSTR = chr ncmp lcat lcpy len  nstr rchr dup trim join mapi iteri
-FTSUB = substr split
-FTTO = ft_tolower ft_toupper ft_atoi ft_itoa 
-FTLEN = ft_intlen
-MAIN = main
+SRC = ft_memset.c ft_bzero.c ft_memcpy.c ft_memmove.c ft_striteri.c \
+		ft_memchr.c ft_memcmp.c ft_strlen.c ft_strlcpy.c ft_strlcat.c \
+		ft_strchr.c ft_strrchr.c ft_strnstr.c ft_strncmp.c ft_atoi.c \
+		ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
+		ft_toupper.c ft_tolower.c ft_calloc.c ft_strdup.c ft_substr.c \
+		ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa.c ft_strmapi.c \
+		ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c
 
-SRCS = $(addsuffix .c, $(addprefix $(SRCS_PATH)ft_is/ft_is, $(FTIS))) \
-	$(addsuffix .c, $(addprefix $(SRCS_PATH)ft_mem/ft_, $(FTMEM))) \
-	$(addsuffix .c, $(addprefix $(SRCS_PATH)ft_str/ft_str, $(FTSTR))) \
-	$(addsuffix .c, $(addprefix $(SRCS_PATH)ft_to/, $(FTTO))) \
-	$(addsuffix .c, $(addprefix $(SRCS_PATH), $(MAIN))) \
-	$(addsuffix .c, $(addprefix $(SRCS_PATH)ft_put/ft_put, $(FTPUT))) \
-	$(addsuffix .c, $(addprefix $(SRCS_PATH)ft_sub/ft_, $(FTSUB))) \
-	$(addsuffix .c, $(addprefix $(SRCS_PATH)ft_lst/ft_lst, $(FTLST)))
-			 
+OBJECTS = $(SRC:.c=.o)
 
-OBJS		= $(SRCS:.c=.o)
-BONUS_OBJS		= $(BONUS_SRCS:.c=.o)
+BONUS = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c \
+		ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c
 
-$(NAME):	$(OBJS)
-			-@$(AR) $(NAME) $(OBJS) $(FORMAT)
+BONUS_OBJECTS = $(BONUS:.c=.o)
 
-all:		$(NAME)
+RE = rm -f
 
-bonus:		$(OBJS) $(BONUS_OBJS)
-			-@$(AR) $(NAME) $(OBJ) $(BONUS_OBJS)
+all: $(NAME)
+
+$(NAME): $(OBJECTS)
+	ar -rcs $(NAME) $(OBJECTS)
+
+$(OBJECTS): $(SRC)
+	$(CC) $(CFLAGS) -c $(SRC)
+
+bonus: $(BONUS_OBJECTS)
+	ar -rcs $(NAME) $(BONUS_OBJECTS)
+
+$(BONUS_OBJECTS): $(BONUS)
+	$(CC) $(CFLAGS) -c $(BONUS)
 
 clean:
-			-@$(RM) $(OBJS) $(BONUS_OBJS)
+	$(RM) $(OBJECTS) $(BONUS_OBJECTS)
 
-fclean:		clean
-			-@$(RM) $(NAME)
+fclean: clean
+	$(RM) $(NAME)
 
-
-compile: 
-
-	@$(CC) $(CFLAGS) $(SRCS) 
-
-re:			fclean all
-
-.PHONY:		all bonus clean fclean re
+re: fclean all
