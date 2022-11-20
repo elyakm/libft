@@ -6,7 +6,7 @@
 /*   By: klaksi <klaksi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 11:13:19 by klaksi            #+#    #+#             */
-/*   Updated: 2022/11/20 09:12:14 by klaksi           ###   ########.fr       */
+/*   Updated: 2022/11/20 09:42:15 by klaksi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ char	**ft_split(char const *s, char c)
 	int		j;
 	size_t	len;
 
-	len = ft_count(s, c);
 	if (!s)
 		return (NULL);
+	len = ft_count(s, c);
 	i = 0;
 	str = ft_calloc(len + 1, sizeof(char *));
 	if (!str)
