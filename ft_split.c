@@ -6,7 +6,7 @@
 /*   By: klaksi <klaksi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 11:13:19 by klaksi            #+#    #+#             */
-/*   Updated: 2022/11/19 12:47:22 by klaksi           ###   ########.fr       */
+/*   Updated: 2022/11/20 09:12:14 by klaksi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,26 +50,45 @@ static char	*ft_splitted(char const *s, char c, int *index)
 		i++;
 	}
 	str = ft_substr(s, j - i, i);
+	if (!str)
+		return (NULL);
 	*index = j;
 	return (str);
 }
 
+void	ft_free(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+		free(tab[i++]);
+	free(tab);
+}
+
 char	**ft_split(char const *s, char c)
 {
-	char		**str;
-	size_t		i;
-	int			j;
+	char	**str;
+	size_t	i;
+	int		j;
+	size_t	len;
 
+	len = ft_count(s, c);
 	if (!s)
 		return (NULL);
 	i = 0;
-	str = ft_calloc(sizeof(char *), ft_count(s, c) + 1);
+	str = ft_calloc(len + 1, sizeof(char *));
 	if (!str)
 		return (NULL);
 	j = 0;
-	while (i < ft_count(s, c))
+	while (i < len)
 	{
 		str[i] = ft_splitted(s, c, &j);
+		if (!str[i])
+		{
+			ft_free(str);
+			return (NULL);
+		}
 		i++;
 	}
 	return (str);

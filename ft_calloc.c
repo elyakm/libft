@@ -6,7 +6,7 @@
 /*   By: klaksi <klaksi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 12:44:51 by klaksi            #+#    #+#             */
-/*   Updated: 2022/11/19 12:47:22 by klaksi           ###   ########.fr       */
+/*   Updated: 2022/11/19 14:10:02 by klaksi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,13 @@
 
 void	*ft_calloc(size_t count, size_t size)
 {
-	size_t	memo;
-	char	*pointer;
-	size_t	i;
+	void	*pointer;
 
-	memo = count * size;
-	pointer = malloc(memo * sizeof(char));
-	i = 0;
+	pointer = (void *)malloc(count * size);
 	if (!pointer)
-	{
 		return (NULL);
-	}
-	while (i < memo)
-	{
-		pointer[i] = 0;
-		i++;
-	}
-	return ((void *)pointer);
+	if (size == SIZE_MAX)
+		return (NULL);
+	ft_bzero(pointer, count * size);
+	return (pointer);
 }
